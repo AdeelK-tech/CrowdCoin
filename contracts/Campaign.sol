@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.10;
+import "hardhat/console.sol";
 
 contract CampaignFactory{
     Campaign[] public Campaigns;
@@ -50,18 +51,19 @@ contract Campaign{
          req.completed=false;
          req.approvalCount=0;
          numRequests++;
+        //  console.log("amount of this request is: ",req.amount);
         }
         function approveRequest(uint _index)public{
             Request storage req=requests[_index];
-            require(approvers[msg.sender]);
-            require(!req.approvals[msg.sender]);
+            require(approvers[msg.sender],"not in approvers list");
+            require(!req.approvals[msg.sender],"You cannot approve a request twice");
             req.approvals[msg.sender]=true;
             req.approvalCount++;
         }
         function finalizeRequest(uint _index)public onlyManager{
             Request storage req= requests[_index];
-            require(!req.completed);
-            require(req.approvalCount>approversCount/2);
+            require(!req.completed,"request already completed");
+            require(req.approvalCount>approversCount/2,"not enough approvers");
             req.recipient.transfer(req.amount);
             req.completed=true;
         }
