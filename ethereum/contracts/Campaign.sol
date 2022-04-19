@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.10;
+pragma solidity ^0.8.9;
 import "hardhat/console.sol";
 
 contract CampaignFactory{
@@ -66,5 +66,17 @@ contract Campaign{
             require(req.approvalCount>approversCount/2,"not enough approvers");
             req.recipient.transfer(req.amount);
             req.completed=true;
+        }
+        function campaignSummary()public view returns(uint,uint,uint,uint,address){
+            return(
+                address(this).balance,
+                numRequests,
+                approversCount,
+                minContribution,
+                manager
+            );
+        }
+        function getNumofRequests()public view returns(uint){
+            return numRequests;
         }
 }

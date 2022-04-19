@@ -71,6 +71,7 @@ describe('CampaignContract', () => {
             await Campaign.connect(contributor_1).approveRequest(0)
             
             await Campaign.connect(manager).finalizeRequest(0);
+            
             const req=await Campaign.requests(0)
             expect(req.completed).to.equal(true);
         })
