@@ -12,7 +12,7 @@ const CampaignForm=()=>{
     const[loading,setLoading]=useState(false)
     const onInputChange=(e)=>{
         setMinContribution(e.target.value)
-        // console.log(minContribution)
+        console.log(minContribution)
     }
     const onFormSubmit=async(e)=>{
         e.preventDefault()
@@ -42,7 +42,7 @@ const CampaignForm=()=>{
                 ></Input>
             </Form.Field>
             <Message error header='Something went wrong' content={error}></Message>
-            <Button primary loading={loading}>Create !</Button>
+            <Button primary loading={loading} >Create !</Button>
         </Form>
         </Layout>
     )
